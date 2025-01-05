@@ -4235,6 +4235,7 @@ Window_NameBox.prototype.start = function() {
     this.refresh();
 };
 
+// Updates the Name Box placement above the Text Box
 Window_NameBox.prototype.updatePlacement = function() {
     this.width = this.windowWidth();
     this.height = this.windowHeight();
@@ -4267,13 +4268,14 @@ Window_NameBox.prototype.windowWidth = function() {
 };
 
 Window_NameBox.prototype.windowHeight = function() {
-    return this.fittingHeight(1);
+    return this.fittingHeight(0.5); // Adjust Name Box's height (Default: 1)
 };
 
 Window_NameBox.prototype.refresh = function() {
     const rect = this.baseTextRect();
     this.contents.clear();
-    this.drawTextEx(this._name, rect.x, rect.y, rect.width);
+    const padding = -10; // Shifts the Name Text (-: Up, +: Down)
+    this.drawTextEx(this._name, rect.x, rect.y + padding, rect.width);
 };
 
 //-----------------------------------------------------------------------------
@@ -4784,6 +4786,10 @@ Window_Message.prototype = Object.create(Window_Base.prototype);
 Window_Message.prototype.constructor = Window_Message;
 
 Window_Message.prototype.initialize = function(rect) {
+    const width = 700; // Desired width
+    const height = 150; // Desired height
+    rect = new Rectangle(0, Graphics.boxHeight - height, width, height);
+
     Window_Base.prototype.initialize.call(this, rect);
     this.openness = 0;
     this.initMembers();
@@ -4882,7 +4888,7 @@ Window_Message.prototype.newLineX = function(textState) {
     const faceExists = $gameMessage.faceName() !== "";
     const faceWidth = ImageManager.faceWidth;
     const spacing = 20;
-    const margin = faceExists ? faceWidth + spacing : 4;
+    const margin = faceExists ? faceWidth + spacing : spacing; // Increase/decrease the spacing of text to textbox
     return textState.rtl ? this.innerWidth - margin : margin;
 };
 
