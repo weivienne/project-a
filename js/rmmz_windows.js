@@ -4366,10 +4366,11 @@ Window_ChoiceList.prototype.placeCancelButton = function() {
 
 Window_ChoiceList.prototype.windowX = function() {
     const positionType = $gameMessage.choicePositionType();
+    // 1 = Center, 2 = Right
     if (positionType === 1) {
-        return (Graphics.boxWidth - this.windowWidth()) / 2;
+        return (Graphics.boxWidth - (this.windowWidth()) / 2);
     } else if (positionType === 2) {
-        return Graphics.boxWidth - this.windowWidth();
+        return Graphics.boxWidth - this.windowWidth() - 123;
     } else {
         return 0;
     }
